@@ -1,0 +1,34 @@
+body{
+    box-sizing: border-box;
+}
+
+
+h1 {
+    display: flex;
+    justify-content: center;
+}
+section{
+    display: flex;
+    justify-content: center;
+}
+#board-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    border: solid ;
+    height: 78vh;
+    width: 95vh;
+}
+
+.grid-cell {
+    display: flex;;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 40vh;
+    height: 25vh;
+    font-size: 12vh;
+    border:solid
+}
