@@ -17,8 +17,8 @@ section{
     align-content: center;
     flex-wrap: wrap;
     border: solid ;
-    height: 98vh;
-    width: 95vh;
+    height: 90vh;
+    width: 100vh;
 }
 
 .grid-cell {
