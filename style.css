@@ -1,5 +1,12 @@
+html{
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
 body{
     box-sizing: border-box;
+    
 }
 
 
@@ -13,12 +20,13 @@ section{
 }
 #board-container{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-content: center;
     flex-wrap: wrap;
-    border: solid ;
-    height: 90vh;
-    width: 100vh;
+    height: 82vh;
+    width: 95vh;
+    
 }
 
 .grid-cell {
@@ -30,4 +38,18 @@ section{
     height: 25vh;
     font-size: 12vh;
     border:solid
+}
+footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+}
+button{
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 200px;
+    font-size: 30px;
+    /* border: solid; */
 }
