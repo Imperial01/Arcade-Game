@@ -20,6 +20,7 @@ let cellElem = document.querySelectorAll('grid-cell');
 let player1 = document.getElementById('player1');
 let player2 = document.getElementById('player2');
 let form = document.getElementById('player-form');
+let playerElem = document.getElementById('player-nav')
 
 //-------RENDER FUNCTION
 let gameArr = gameState.board;
@@ -63,12 +64,12 @@ form.addEventListener('submit', function (e) {
     let playerRow = document.createElement('div')
     titleElem.appendChild(playerRow);
     playerRow.className = "playerList"
-    playerRow.innerHTML = player1.value + " VERSUS " + player2.value
+    playerElem.innerHTML = player1.value + " VERSUS " + player2.value
     form.style.display = "none"
     board.dataset.play = "ON"
     console.log(player1.value)
     
-    titleElem.innerHTML = "Player 1 is " +  gameState.player
+    titleElem.innerHTML = player1.value  + " is " +  gameState.player
     if (player1 && player2 !== true) {
         reset.removeAttribute('hidden');
     }

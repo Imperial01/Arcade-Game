@@ -17,6 +17,11 @@ h1 {
     flex-direction: column;
     margin: 0%;
 }
+h3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 section{
     display: flex;
     justify-content: center;
