@@ -14,10 +14,17 @@
         <main id="board-container">
         </main>
     </section>
+    <aside>
+        <form id='player-form'>
+            <input class="player-name" id="player1" placeholder="Enter Player 1 name">
+            <input class="player-name" id="player2" placeholder="Enter Player 2 name">
+            <button id="submit" type="submit">Enter Players</button>
+        </form>
+    </aside>
 
 </body>
 <footer>
-    <button hidden>Reset</button>
+    <button hidden id='reset' onclick=resetButton()>Reset</button>
 </footer>
 
 </html>
