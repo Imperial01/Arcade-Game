@@ -73,3 +73,6 @@ aside{
     display: flex;
     font-size: 25px;
 }
+.player-name{
+    width: 15em;
+}
