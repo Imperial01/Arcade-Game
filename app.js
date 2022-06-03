@@ -9,18 +9,19 @@ let gameState = {
         gameState.player = gameState.player === "X" ? "O" : "X";
     },
     move: function () {
-        gameState.board = gameState.changeTurn
+        gameState.board = gameState.changeTurn;
     }
-}
+};
 //-------DOM
-let board = document.querySelector('#board-container');
 let titleElem = document.getElementById('title')
-let reset = document.querySelector('#reset')
+let board = document.querySelector('#board-container');
 let cellElem = document.querySelectorAll('grid-cell');
-let player1 = document.getElementById('player1');
-let player2 = document.getElementById('player2');
 let form = document.getElementById('player-form');
 let playerElem = document.getElementById('player-nav')
+let player1 = document.getElementById('player1');
+let player2 = document.getElementById('player2');
+console.log(player2.value)
+let reset = document.querySelector('#reset')
 
 //-------RENDER FUNCTION
 let gameArr = gameState.board;
@@ -45,7 +46,12 @@ renderBoard();
 
 let cells = document.querySelectorAll('.grid-cell');
 let boardState = Array(cells.length);
+for (let i = 0; i < boardState.length; i++) {
+    console.log(boardState[i]);
+
+}
 boardState.fill(null);
+console.log(typeof (boardState));
 
 let winningCombos = [
     { combo: [0, 1, 2] },
@@ -63,32 +69,32 @@ form.addEventListener('submit', function (e) {
     e.preventDefault();
     let playerRow = document.createElement('div')
     titleElem.appendChild(playerRow);
-    playerRow.className = "playerList"
-    playerElem.innerHTML = player1.value + " VERSUS " + player2.value
-    form.style.display = "none"
-    board.dataset.play = "ON"
-    console.log(player1.value)
-    
-    titleElem.innerHTML = player1.value  + " is " +  gameState.player
+    playerRow.className = "playerList";
+    playerElem.innerHTML = player1.value + " VERSUS " + player2.value;
+    form.style.display = "none";
+    board.dataset.play = "ON";
+
+
+    titleElem.innerHTML = player1.value + " is " + gameState.player
     if (player1 && player2 !== true) {
         reset.removeAttribute('hidden');
     }
-    if(player1.innerHTML !== ' '){
-        console.log("one 1")
-    }
 
-})
+});
 
 cells.forEach((cell) => cell.addEventListener('click', titleClick));
 function titleClick(event) {
-    console.log(event.target);
+    //console.log(event.target);
     let index = event.target;
     let indexNum = index.dataset.idx;
+    //console.log(indexNum)
+
+
     if (board.dataset.play !== "ON") {
         return
     }
     if (boardState[indexNum] !== null) {
-        return
+        return;
     }
     if (gameState.player == "X" && boardState[indexNum] == null) {
         index.innerText = gameState.player;
@@ -99,16 +105,38 @@ function titleClick(event) {
         index.innerText = gameState.player;
         boardState[indexNum] = gameState.player;
         gameState.changeTurn();
-        console.log(boardState[indexNum]);
+        //console.log(boardState[indexNum]);
     }
+    if (board.dataset.play == "ON" && player2.value == "Computer" && boardState.includes(null)) {
+        autoSelect();
+        gameState.changeTurn();
+        for (let i = 0; i < cells.length; i++) {
+            cells[i].innerHTML = '';
+            
+        }
+        //let aiPlayer = autoSelect();
+        //console.log(boardState.indexOf(autoSelect()))
+        //let cellElemArr = Array.from(cells)
+        //console.log(cellElemArr)
+
+        console.log(boardState)
+        // cells.innerText = aiPlayer
+        // console.log(boardState)
+        // gameState.changeTurn();
+        // console.log(boardState)
+        
+    }
+
     checkWinner();
     cells.forEach((cell) => cell.addEventListener('click', titleClick));
-    //console.log(checkWinner)
+
     if (titleElem.dataset.winner === gameState.player) {
         cells.forEach((cell) => cell.removeEventListener('click', titleClick));
         reset.removeAttribute('hidden');
-
+        
     }
+    gameState.changeTurn();
+    console.log(boardState);
 
 }
 
@@ -123,7 +151,7 @@ function checkWinner() {
             titleElem.innerHTML = ('Draw!');
             reset.innerHTML = "Play again?";
             cells.forEach((cell) => cell.removeEventListener('click', titleClick));
-        }else if (winA && winA === winB && winA === winC) {
+        } else if (winA && winA === winB && winA === winC) {
             gameState.changeTurn();
             let titleElem = document.getElementById('title');
             titleElem.innerHTML = ('You win ' + gameState.player);
@@ -131,22 +159,33 @@ function checkWinner() {
             reset.removeAttribute('hidden');
             reset.innerHTML = "Play again?";
             cells.forEach((cell) => cell.removeEventListener('click', titleClick));
-        } 
-    
+        }
+
     }
 }
 
 function resetButton() {
     gameState.changeTurn();
-    titleElem.innerHTML = 'Tic-Tac-Toe'
-    titleElem.dataset.winner = ""
+    titleElem.innerHTML = 'Tic-Tac-Toe';
+    titleElem.dataset.winner = "";
     cells.forEach((cell) => cell.addEventListener('click', titleClick));
-    boardState.fill(null)
-    form.style.display = 'flex'
+    Array(9);
+    boardState.fill(null);
+    form.style.display = 'flex';
     for (let i = 0; i < cells.length; i++) {
-        cells[i].innerHTML = ''
-    }
-}
+        cells[i].innerHTML = '';
+    };
+};
+
+function autoSelect() {
+    let randomNum = Math.floor(Math.random() * 9);
+    let randomTurn = boardState[Math.floor(Math.random() * boardState.length)];
+    randomTurn = randomNum;
+    for (let i = 0; i < boardState.length; i++) {
+        boardState[randomTurn] = gameState.player;
+    };
+
+};
 
 
 

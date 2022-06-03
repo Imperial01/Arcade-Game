@@ -3,8 +3,7 @@
 
 <head>
     <title>Tic-Tac-Toe</title>
-    <link rel="stylesheet" href="style.css">
-    </link>
+    <link rel="stylesheet" href="style.css"></link>
     <script defer src="/app.js"></script>
 </head>
 
@@ -15,10 +14,14 @@
         <main id="board-container">
         </main>
     </section>
+    <section id="sizing-container">
+        <button id='increase-board'>+</button>
+        <button id='decrease-board'>-</button>
+    </section>
     <aside>
         <form id='player-form'>
-            <input class="player-name" id="player1" placeholder="Enter Player 1 name">
-            <input class="player-name" id="player2" placeholder="Enter Player 2 name" value = "Computer">
+            <input class="player-name" id="player1" placeholder="Enter Player 1" required>
+            <input class="player-name" id="player2" placeholder="Enter Player 2 name" value="Computer" required>
             <button id="submit" type="submit">Enter Players</button>
         </form>
     </aside>
@@ -27,5 +30,4 @@
 <footer>
     <button hidden id='reset' onclick=resetButton()>Reset</button>
 </footer>
-
 </html>

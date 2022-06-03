@@ -22,7 +22,7 @@ h3 {
     justify-content: center;
     align-items: center;
 }
-section{
+section, #sizing-container{
     display: flex;
     justify-content: center;
 }
