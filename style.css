@@ -1,6 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Indie+Flower&display=swap');
 html{
     margin-left: auto;
     margin-right: auto;
+    font-family: 'Fredoka One', cursive;
+    font-family: 'Indie Flower', cursive;
+    
     
 }
 
@@ -16,6 +20,7 @@ h1 {
     align-items: center;
     flex-direction: column;
     margin: 0%;
+    font-size: 50px;
 }
 h3 {
     display: flex;
@@ -32,8 +37,8 @@ section, #sizing-container{
     justify-content: center;
     align-content: center;
     flex-wrap: wrap;
-    height: 82vh;
-    width: 95vh;
+    height: 62vh;
+    width: 75vh;
     margin: 0%;
 }
 
@@ -42,10 +47,10 @@ section, #sizing-container{
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    width: 30vh;
-    height: 25vh;
+    width: 22vh;
+    height: 19vh;
     font-size: 12vh;
-    border:solid
+    border:solid rgb(54, 34, 87)
 }
 footer{
     display: flex;
