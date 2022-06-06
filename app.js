@@ -62,7 +62,6 @@ function cellClick(event) {
     //checkWinner();
     let index = event.target;
     let indexNum = index.dataset.idx;
-    //renderBoard();
     if (board.dataset.play !== "ON") {
         return
     }
@@ -77,7 +76,6 @@ function cellClick(event) {
         boardArr[indexNum] = gameState.player;
         gameState.changeTurn();
         checkWinner();
-        //renderBoard();
         console.log(boardArr);
         console.log(cellElem)
     } else {
@@ -85,8 +83,6 @@ function cellClick(event) {
         boardArr[indexNum] = gameState.player;
         gameState.changeTurn();
         checkWinner();
-        console.log(boardArr)
-        console.log(board)
     }
     //----------------------Computer Function when clicking --------------------===========
     if (playerElem.dataset.player === "Computer") {
@@ -96,7 +92,6 @@ function cellClick(event) {
         checkWinner();
     }
 
-    //cells.forEach((cell) => cell.addEventListener('click', cellClick));
     if (titleElem.dataset.winner === gameState.player) {
         cells.forEach((cell) => cell.removeEventListener('click', cellClick));
         reset.removeAttribute('hidden');
@@ -104,7 +99,6 @@ function cellClick(event) {
     }
     checkWinner();
     renderBoard();
-    console.log(boardArr)
 }
 
 
@@ -171,7 +165,6 @@ function switchUsers() {
 
     if (gameState.player === "O") {
         titleElem.innerHTML = player2.value + " GO! "
-        //gameState.changeTurn();
     } else if (gameState.player === "X") {
 
         titleElem.innerHTML = player1.value + " GO! "
@@ -189,7 +182,6 @@ function computerUser() {
 form.addEventListener('submit', function (e) {
     e.preventDefault();
     boardArr.fill(null)
-    //renderBoard();
     cells.innerHTML = ''
     computer.style.display = 'none'
     switchPlayers.style.display = 'none'
@@ -221,7 +213,6 @@ form.addEventListener('submit', function (e) {
 });
 //------------------------ Reset Button ------------------------------------
 function resetButton() {
-    //gameState.changeTurn();
     boardArr = [null, null, null, null, null, null, null, null, null];
     renderBoard();
     titleElem.dataset.winner = ""
@@ -241,11 +232,5 @@ function resetButton() {
 
 }
 
-
-
-
-
 //--------------------- Bugs to Fix-------------------------------------
 // * website crashes if there is one cell left in Computer mode.
-// * 
-
