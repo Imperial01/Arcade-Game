@@ -81,3 +81,14 @@ aside{
 .player-name{
     width: 15em;
 }
+
+#submit{
+    display: inline;
+}
+#switch {
+    display: none;
+}
+#computerUser{
+    display: flex;
+    color: crimson;
+}

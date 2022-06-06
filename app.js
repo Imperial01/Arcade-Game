@@ -5,9 +5,7 @@ let gameState = {
     changeTurn: function changeTurn() {
         gameState.player = gameState.player === "X" ? "O" : "X";
     },
-    move: function () {
-        gameState.board = gameState.changeTurn
-    }
+
 }
 
 //-------DOM---------------------------------
@@ -18,10 +16,10 @@ let form = document.getElementById('player-form');
 let playerElem = document.getElementById('player-nav')
 let player1 = document.getElementById('player1');
 let player2 = document.getElementById('player2');
-let reset = document.querySelector('#reset')
-// let sizing = document.getElementById('sizing-container')
-// let plusBoard = document.getElementById('increase-board')
-// let minusBoard = document.getElementById('decrease-board')
+let submit = document.querySelector('#submit')
+let reset = document.querySelector('#reset');
+let computer = document.getElementById('computerUser')
+let switchPlayers = document.getElementById('switchUsers')
 
 //------------------RENDER FUNCTION--------------------
 let boardArr = gameState.board;
@@ -40,17 +38,10 @@ function renderBoard() {
         grid.addEventListener('click', cellClick)
 
     }
-    //renderCell();
-    
 }
 renderBoard();
-
-
-// function renderCell() {
-// }
-
 let cells = document.querySelectorAll('.grid-cell');
-cells.forEach((cell) => cell.addEventListener('click', cellClick));
+
 
 
 let winningCombos = [
@@ -66,8 +57,9 @@ let winningCombos = [
 ];
 
 //--------------------------- Event Listeners (Player click) -------------------------
-//renderBoard();
+cells.forEach((cell) => cell.addEventListener('click', cellClick));
 function cellClick(event) {
+    //checkWinner();
     let index = event.target;
     let indexNum = index.dataset.idx;
     //renderBoard();
@@ -77,18 +69,14 @@ function cellClick(event) {
     if (boardArr[indexNum] !== null) {
         return
     }
-    //---------------------------- Player Function -----------------------------    
-    //----------------------Computer Function when clicking --------------------
-    if (player2.value === "Computer") {
-        gameState.player = "X"
-        computerMove();
-        
 
-    }
+    //---------------------------- Player Function ----------------------------------------    
+
     if (gameState.player == "X" && boardArr[indexNum] == null) {
         index.innerText = gameState.player;
         boardArr[indexNum] = gameState.player;
         gameState.changeTurn();
+        checkWinner();
         //renderBoard();
         console.log(boardArr);
         console.log(cellElem)
@@ -96,107 +84,168 @@ function cellClick(event) {
         index.innerText = gameState.player;
         boardArr[indexNum] = gameState.player;
         gameState.changeTurn();
+        checkWinner();
         console.log(boardArr)
         console.log(board)
     }
+    //----------------------Computer Function when clicking --------------------===========
+    if (playerElem.dataset.player === "Computer") {
+        gameState.player = "X"
+        computerMove();
+        gameState.changeTurn();
+        checkWinner();
+    }
 
-    cells.forEach((cell) => cell.addEventListener('click', cellClick));
+    //cells.forEach((cell) => cell.addEventListener('click', cellClick));
     if (titleElem.dataset.winner === gameState.player) {
-        //cells.forEach((cell) => cell.removeEventListener('click', cellClick));
+        cells.forEach((cell) => cell.removeEventListener('click', cellClick));
         reset.removeAttribute('hidden');
 
     }
-
-    renderBoard();
     checkWinner();
-
+    renderBoard();
+    console.log(boardArr)
 }
 
 
+//---------------------- Helper Functions ----------------------------------    
 function computerMove() {
     do {
-        randomNum = Math.floor(Math.random() * 9);
-
-    } while (boardArr[randomNum] != null && boardArr[randomNum] );
+        randomNum = Math.ceil(Math.random() * 7);
+        
+    } while (boardArr[randomNum] != null && boardArr[randomNum]);
     boardArr[randomNum] = gameState.computer;
-
+    checkWinner();
+    
 }
 
-//-------------------------Check Winner------------------------------
 function checkWinner() {
+    gameState.changeTurn();
+    titleElem.innerHTML= "Tic-Tac-Toe"
     for (let winningCombo of winningCombos) {
         let { combo } = winningCombo
         let winA = boardArr[combo[0]];
         let winB = boardArr[combo[1]];
         let winC = boardArr[combo[2]];
-        gameState.changeTurn();
         if (winA && winA === winB && winA === winC) {
-            let titleElem = document.getElementById('title');
-            titleElem.innerHTML = ('You win ' + gameState.player);
-            titleElem.dataset.winner = gameState.player;
             board.dataset.play = "OFF"
+            let titleElem = document.getElementById('title');
+            titleElem.innerHTML = ('You win ' + winA);
+            if (playerElem.dataset.player === "Computer"){
+                titleElem.innerHTML = 'You win ' + winA
+                gameState.changeTurn();
+            }
+            cells.forEach((cell) => cell.removeEventListener('click', cellClick));
+            gameState.changeTurn();
+            titleElem.dataset.winner = gameState.player;
             reset.removeAttribute('hidden');
-            reset.innerHTML = "Play again?";
-            //cells.forEach((cell) => cell.removeEventListener('click', cellClick));
+            reset.style.display = 'flex'
+            reset.innerHTML = "Reset";
         }
         if (!boardArr.includes(null) && !(winA && winA === winB && winA === winC)) {
             board.dataset.play = "OFF"
-            gameState.changeTurn();
             reset.removeAttribute('hidden');
             titleElem.innerHTML = ('Draw!');
+            reset.style.display = 'flex'
             reset.innerHTML = "Play again?";
-            //cells.forEach((cell) => cell.removeEventListener('click', cellClick));
         }
 
-        gameState.changeTurn();
     }
 
 }
-//-------------------------- Event Listeners (submit button) --------------------------
+
+function switchUsers() {
+    const user1 = player1.value
+    const user2 = player2.value
+    switchPlayers.addEventListener('click', function (event) {
+        player1.value = user2
+        player2.value = user1
+
+    })
+    if (gameState.player === "O") {
+        titleElem.innerHTML = player1.value + " GO! "
+    }
+    submit.innerHTML = "Enter Players"
+
+
+
+    if (gameState.player === "O") {
+        titleElem.innerHTML = player2.value + " GO! "
+        //gameState.changeTurn();
+    } else if (gameState.player === "X") {
+
+        titleElem.innerHTML = player1.value + " GO! "
+    }
+}
+
+function computerUser() {
+    player2.value = "Computer"
+    submit.innerHTML = "Good Luck"
+    form.style.display = "flex"
+    reset.style.display = 'flex'
+
+}
+//-------------------------- Submit Button --------------------------
 form.addEventListener('submit', function (e) {
     e.preventDefault();
     boardArr.fill(null)
+    //renderBoard();
     cells.innerHTML = ''
-
-    let playerRow = document.createElement('div')
-    titleElem.appendChild(playerRow);
-    playerRow.className = "playerList"
-    playerElem.innerHTML = player1.value + " VERSUS " + player2.value
-    form.style.display = "none"
-    board.dataset.play = "ON"
-    titleElem.innerHTML = player1.value + " is " + gameState.player
-    if(player2.value == "Computer"){
-        titleElem.innerHTML = player1.value + " is X" 
+    computer.style.display = 'none'
+    switchPlayers.style.display = 'none'
+    if (player2.value == "Computer") {
+        playerElem.dataset.player = "Computer"
+        switchPlayers.style.display = 'none'
+        gameState.player = "X"
+        titleElem.innerHTML = player1.value + " is X"
 
     }
-    
-    if (player2.value !== "Computer"){
+
+    if (player2.value !== "Computer") {
         titleElem.innerHTML = player1.value + " is " + gameState.player
     }
-    
     if (player1 && player2 !== true) {
         reset.removeAttribute('hidden');
     }
+    let playerRow = document.createElement('div')
+    titleElem.appendChild(playerRow);
+    playerRow.className = "playerList"
+    player1.dataset.player = player1.value
+    player2.dataset.player = player2.value
+    playerElem.innerHTML = player1.dataset.player + " VERSUS " + player2.dataset.player
+    form.style.display = "none"
+    reset.style.display = 'none'
+    board.dataset.play = "ON"
+    titleElem.innerHTML = player1.dataset.player + " is " + gameState.player
     cells.forEach((cell) => cell.addEventListener('click', cellClick));
-})
+});
 //------------------------ Reset Button ------------------------------------
 function resetButton() {
+    //gameState.changeTurn();
     boardArr = [null, null, null, null, null, null, null, null, null];
-    playerElem.innerHTML = player1.value + " VERSUS " + player2.value
-    titleElem.innerHTML = player1.value + " is " + gameState.player
-    titleElem.innerHTML = 'Tic-Tac-Toe'
-    titleElem.dataset.winner = ""
-    //playerElem.innerHTML = ''
-    board.dataset.play = "ON"
-    form.style.display = 'flex'
-    //cells.forEach((cell) => cell.addEventListener('click', cellClick));
     renderBoard();
+    titleElem.dataset.winner = ""
+    board.dataset.play = "ON"
+    switchPlayers.style.display = 'flex'
+    computer.style.display = 'flex'
+    form.style.display = 'flex'
+    titleElem.innerHTML = 'Tic-Tac-Toe'
+    if (player2.value === "Computer") {
+        player2.dataset.player = "Computer"
+        return titleElem.innerHTML = player1.value + " is X"
+
+    }
+    playerElem.dataset.player = ''
+    gameState.changeTurn();
+    submit.innerHTML = 'Enter Players'
+
 }
+
+
 
 
 
 //--------------------- Bugs to Fix-------------------------------------
-// * player vs computer --> if all squares are filled and x  or o wins, Title returns DRAW.
-// * computer is still rendering move on same cell as player.  
-// * if the opponent wins they go first, but its its a draw player order stays the same. 
+// * website crashes if there is one cell left in Computer mode.
+// * 
 

@@ -15,13 +15,13 @@
         </main>
     </section>
     <section id="sizing-container">
-        <button id='increase-board'>+</button>
-        <button id='decrease-board'>-</button>
+        <button id='switchUsers' onclick= switchUsers()>Switch</button>
+        <button id='computerUser' onclick= computerUser()>Computer</button>
     </section>
     <aside>
         <form id='player-form'>
             <input class="player-name" id="player1" placeholder="Enter Player 1" required>
-            <input class="player-name" id="player2" placeholder='Enter Player 2 or "Computer"'   required>
+            <input class="player-name" id="player2" placeholder='Enter Player 2 or "Computer"' required>
             <button id="submit" type="submit">Enter Players</button>
         </form>
     </aside>
@@ -29,5 +29,7 @@
 </body>
 <footer>
     <button hidden id='reset' onclick=resetButton()>Reset</button>
+    <button id='switch'>Switch Players?</button>
+
 </footer>
 </html>
